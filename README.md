@@ -22,7 +22,7 @@ abra-o.
 
 ``` r
 install.packages("usethis")
-usethis::create_package("caminho_ate_o_projeto/nome_do_projeto")
+usethis::create_project("caminho_ate_o_projeto/nome_do_projeto")
 ```
 
 #### Passo 3: Baixar o material
