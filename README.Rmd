@@ -65,7 +65,7 @@ knitr::kable(
 ## Scripts usados em aula
 
 ```{r, echo = FALSE}
-nome_pasta <- "R/"
+nome_pasta <- "scripts_de_aula/"
 knitr::kable(
   tibble::tibble(
     script = list.files(nome_pasta, pattern = ".R"),
