@@ -54,5 +54,8 @@ CursoR::atualizar_material()
 
 ## Scripts usados em aula
 
-| script | link |
-| :----- | :--- |
+| script            | link                                                                            |
+| :---------------- | :------------------------------------------------------------------------------ |
+| 01-ola-mundo.R    | <https://curso-r.github.io/202009-dashboards/scripts_de_aula/01-ola-mundo.R>    |
+| 02-output.R       | <https://curso-r.github.io/202009-dashboards/scripts_de_aula/02-output.R>       |
+| 03-output-input.R | <https://curso-r.github.io/202009-dashboards/scripts_de_aula/03-output-input.R> |
