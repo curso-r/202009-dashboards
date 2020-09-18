@@ -5,7 +5,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-
+browser()
 }
 
 shinyApp(ui, server)
