@@ -1,0 +1,12 @@
+name: exemploDados
+title: exemploDados
+username:
+account: cursodashboards
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2865209
+bundleId: 3659170
+url: https://cursodashboards.shinyapps.io/exemploDados/
+when: 1600815300.4049
+asMultiple: FALSE
+asStatic: FALSE

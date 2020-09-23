@@ -13,12 +13,12 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  
+
   output$hist <- renderPlot({
     amostra <- rnorm(input$num)
     hist(amostra)
   })
-    
+
 }
 
 shinyApp(ui, server)
