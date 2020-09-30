@@ -1,0 +1,7 @@
+name: shiny
+remote_url: 'https://rseis.shinyapps.io/covid'
+auth0_config:
+  api_url: 'https://dashboards-curso.us.auth0.com'
+  credentials:
+    key: "2gPnaBhgoflO2HD2vZ8BQGVOUlIZtoAq"
+    secret: "WeeHhrYEH72yNk9SYUDrpp2Q0gGTDwGufiUl8LJu-kugfc-x3U1gg-296o99GAhF"
