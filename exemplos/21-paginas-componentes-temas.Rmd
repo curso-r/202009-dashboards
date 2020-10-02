@@ -4,14 +4,14 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-    theme: bootstrap
+    theme: cosmo
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
 
-credit <- read_rds("../dados/credit.rds")
+credit <- read_rds("../dados/credito.rds")
 ```
 
 Perfil financeiro
@@ -23,7 +23,7 @@ Column {data-width=250}
 ### Número de clientes
 
 ```{r}
-valueBox(nrow(credit), icon = "fa-users", color = "success")
+valueBox(nrow(credit), icon = "fa-users", color = "#fcba05")
 ```
 
 ### Valor médio dos empréstimos
@@ -47,16 +47,18 @@ valueBox(tempo_medio, icon = "fa-clock", color = "primary")
 
 ### Proporção de clientes com dívidas
 
-```{r}
+```{r, out.width="400px", out.height="400px"}
 prop_divida <- sum(credit$dividas == 0, na.rm = TRUE)/nrow(credit)
 prop_divida <- scales::percent(prop_divida, digits = 1)
 
-gauge(prop_divida, min = 0, max = 100, symbol = "%", gaugeSectors(colors = "danger"))
+# gauge(prop_divida, min = 0, max = 100)
+
+gauge(prop_divida, min = 0, max = 100, symbol = "%", sectors = gaugeSectors(colors = "danger"))
 ```
 
 ### Proporção de empréstimos concedidos
 
-```{r}
+```{r, out.width="400px", out.height="400px"}
 prop_bons <- sum(credit$status == "bom")/nrow(credit)
 prop_bons <- scales::percent(prop_bons, digits = 1)
 
@@ -70,7 +72,7 @@ Column {data-width=750}
 
 ### Perfil dos clientes
 
-```{r, fig.width=10, fig.height=3.5, fig.align="center"}
+```{r, fig.width=9, fig.height=2.5, fig.align="center", out.height="300px", out.width="800px"}
 credit %>% 
   mutate(status = fct_rev(status)) %>% 
   ggplot(aes(y = status, x = renda, fill = status)) +
@@ -121,7 +123,7 @@ valueBox(tempo_medio, icon = "fa-clock", color = "primary")
 
 ### Proporção de clientes com dívidas
 
-```{r}
+```{r, out.width="400px", out.height="400px"}
 prop_divida <- sum(credit$dividas == 0, na.rm = TRUE)/nrow(credit)
 prop_divida <- scales::percent(prop_divida, digits = 1)
 
@@ -130,7 +132,7 @@ gauge(prop_divida, min = 0, max = 100, symbol = "%", gaugeSectors(colors = "dang
 
 ### Proporção de empréstimos concedidos
 
-```{r}
+```{r, out.width="400px", out.height="400px"}
 prop_bons <- sum(credit$status == "bom")/nrow(credit)
 prop_bons <- scales::percent(prop_bons, digits = 1)
 
@@ -143,7 +145,7 @@ Column {data-width=750}
 
 ### Perfil dos clientes
 
-```{r, fig.width=10, fig.height=3.5, fig.align="center"}
+```{r, fig.width=10, fig.height=3.5, fig.align="center", out.height="300px", out.width="800px"}
 credit %>% 
   mutate(status = fct_rev(status)) %>% 
   ggplot(aes(y = status, x = idade, fill = status)) +

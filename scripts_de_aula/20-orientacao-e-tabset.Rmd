@@ -1,0 +1,117 @@
+---
+title: "Orientação e tabsets"
+date: "Curso de Dashboards"
+author: "Flexdashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    navbar:
+      - {icon: "fa-github", href: "https://github.com/curso-r"}
+      - {icon: "fa-facebook", href: "https://github.com/curso-r"}
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+
+pkmn <- readr::read_rds("../dados/pkmn.rds")
+```
+
+Linhas {data-height=100}
+-----------------------------------------------------------------------
+
+### Caixa 1
+
+```{r, fig.height=3, fig.width=13}
+cores <- pkmn %>% 
+  distinct(tipo_1, cor_1) %>% 
+  arrange(tipo_1)
+
+cores <- set_names(cores$cor_1, cores$tipo_1)
+
+pkmn %>% 
+  ggplot(aes(x = tipo_1, y = ataque, fill = tipo_1)) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(x = "Tipo", y = "Ataque") +
+  scale_fill_manual(values = cores) +
+  theme_minimal()
+```
+
+### Descrição
+
+Esse é um gráfico para o tipo dragão. Esse é um gráfico para o tipo dragão. Esse é um gráfico para o tipo dragão. Esse é um gráfico para o tipo dragão. Esse é um gráfico para o tipo dragão. Esse é um gráfico para o tipo dragão.
+
+Linhas {data-height=300 .tabset}
+-----------------------------------------------------------------------
+
+### Tipo dragão
+
+```{r, fig.height=4, fig.width=5}
+legenda <- "Esse é um gráfico para o tipo dragão."
+
+pkmn %>%
+  filter(tipo_1 == "dragão", !is.na(id_geracao)) %>% 
+  mutate(
+    geracao = paste("Geração ", id_geracao)
+  ) %>%
+  ggplot(aes(x = geracao)) + 
+  geom_bar(fill = cores["dragão"]) + 
+  labs(
+    x = "", 
+    y = "Número de pokémon",
+    caption = legenda
+  ) +
+  theme_minimal()
+```
+
+
+
+### Tipo lutador
+
+```{r}
+pkmn %>%
+  filter(tipo_1 == "lutador", !is.na(id_geracao)) %>% 
+  mutate(
+    geracao = paste("Geração ", id_geracao)
+  ) %>%
+  ggplot(aes(x = geracao)) + 
+  geom_bar(fill = cores["lutador"]) + 
+  labs(x = "", y = "Número de pokémon") +
+  theme_minimal()
+
+pkmn %>%
+  filter(tipo_1 == "lutador") %>% 
+  gather(atributo, valor, 
+         hp, ataque, defesa, velocidade, ataque_especial, defesa_especial) %>%
+  mutate(
+    atributo = str_replace(atributo, "_", " ")
+  ) %>% 
+  ggplot(aes(x = atributo, y = valor)) + 
+  geom_boxplot(fill = cores["lutador"]) + 
+  labs(x = "Atributo", y = "Valor") +
+  theme_minimal()
+```
+
+
+### Usando códigos em HTML
+
+A seguir um exemplo de um código em HTML para inserir uma imagem ao dashboard.
+
+```
+<center>
+<img src="https://raw.githubusercontent.com/phalt/pokeapi/master/data/Pokemon_XY_Sprites/1.png">
+<img src="https://raw.githubusercontent.com/phalt/pokeapi/master/data/Pokemon_XY_Sprites/4.png">
+<img src="https://raw.githubusercontent.com/phalt/pokeapi/master/data/Pokemon_XY_Sprites/7.png">
+</center>
+```
+
+```{r}
+shiny::HTML("<center>")
+shiny::img(src = "https://raw.githubusercontent.com/phalt/pokeapi/master/data/Pokemon_XY_Sprites/1.png")
+shiny::img(src = "https://raw.githubusercontent.com/phalt/pokeapi/master/data/Pokemon_XY_Sprites/4.png")
+shiny::img(src = "https://raw.githubusercontent.com/phalt/pokeapi/master/data/Pokemon_XY_Sprites/7.png")
+shiny::HTML("</center>")
+```
+
+

@@ -10,7 +10,7 @@ runtime: shiny
 ```{r global, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
-imdb <- read_rds("imdb.rds")
+imdb <- read_rds("../dados/imdb.rds")
 ```
 
 Column {.sidebar}
@@ -33,7 +33,7 @@ selectInput(
 Column
 -----------------------------------------------------------------------
 
-### Chart B
+### Gráfico 1
 
 ```{r}
 renderPlot({
@@ -44,11 +44,49 @@ renderPlot({
     group_by(ano) %>% 
     summarise(valor_medio = mean(value, na.rm = TRUE)) %>% 
     filter(!is.na(valor_medio)) %>% 
+    # mutate(
+    #   valor_medio = valor_medio/1000000
+    # ) %>% 
     ggplot(aes(x = ano, y = valor_medio)) +
     geom_line() +
-    labs(y = input$variavel) +
+    labs(y = paste(input$variavel)) +
+    scale_y_continuous(labels = scales::label_number_si()) +
     theme_minimal()
 })
 ```
 
+### Outro input
 
+```{r}
+selectInput(
+  inputId = "variavel2",
+  label = "Selecione a variável",
+  choices = c(
+    "Orçamento" = "orcamento", 
+    "Receita" = "receita", 
+    "Lucro" = "lucro"
+  )
+)
+```
+
+
+Column
+-----------------------------------------------------------------------
+
+### Gráfico 2
+
+```{r}
+renderPlot({
+  imdb %>% 
+    mutate(lucro = receita - orcamento) %>% 
+    pivot_longer(cols = one_of(c("orcamento", "receita", "lucro"))) %>% 
+    filter(name == input$variavel2) %>% 
+    group_by(ano) %>% 
+    summarise(valor_medio = mean(value, na.rm = TRUE)) %>% 
+    filter(!is.na(valor_medio)) %>% 
+    ggplot(aes(x = ano, y = valor_medio)) +
+    geom_line() +
+    labs(y = input$variavel2) +
+    theme_minimal()
+})
+```
