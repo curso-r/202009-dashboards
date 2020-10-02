@@ -1,0 +1,41 @@
+---
+title: "Quem é esse pokemon?"
+date: "Junho de 2019"
+author: "Curso-r e alunos"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+pkmn <- readr::read_rds("../dados/pkmn.rds")
+tmp <- tempfile(fileext = ".jpg")
+```
+
+Row {data-height=100}
+-----------------------------------------------------------------------
+
+### Pokedex
+
+```{r}
+selectInput(
+  inputId = "pokemon",
+  label = "Quem é esse pokemon?",
+  choices = c(pkmn$pokemon)
+)
+```
+
+
+```{r, fig.width=13, fig.height=3, out.width="200px"}
+# peguei o link daqui: https://pokemondb.net/pokedex/
+shiny::renderImage({
+  url <- stringr::str_glue(
+    "https://img.pokemondb.net/artwork/{input$pokemon}.jpg"
+  )
+  httr::GET(url, httr::write_disk(tmp))
+  list(src = tmp)
+})
+```
